@@ -46,10 +46,14 @@ public class App1 {
     public String listNumber(String count) {
         JSONArray list = new JSONArray();
         for (int i = 0; i < Integer.parseInt(count); i++) {
-            JSONObject obj = new JSONObject();
-            obj.put("first", readURL("http://johiv6.herokuapp.com/random?max=100"));
-            obj.put("second", i * 2);
-            list.add(obj);
+            /*JSONObject obj=new JSONObject();
+          obj.put("first", 
+                   readURL("http://kursusp6.herokuapp.com/hello4?max=100"));
+          obj.put("second", i*2);*/
+          JSONArray list2=new JSONArray();
+          list2.add(readURL("http://johiv6.herokuapp.com/random?max=100"));
+          list2.add(readURL("http://johiv6.herokuapp.com/random?max=100"));
+          list.add(list2);
         }
         return list.toJSONString();
     }
