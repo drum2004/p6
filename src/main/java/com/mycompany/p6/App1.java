@@ -5,8 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.security.SecureRandom;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,6 +68,26 @@ public class App1 {
         int number = 1 + random.nextInt(Integer.parseInt(max));
         String token = String.valueOf(number);
         return (token);
+    }
+    
+    @RequestMapping("/exercises")
+    String exercisesHTML(String count){
+            String s="<html><body><h1>Exercises</h1>";
+        try {
+            String data1=readURL("http://johiv6.herokuapp.com/numberList?count="+
+                    Integer.parseInt(count));
+            
+            JSONArray a=(JSONArray)new JSONParser().parse(data1);
+            for (Object obj: a){
+               JSONArray a2=(JSONArray)obj;
+               s+=a2.get(0)+"*"+a2.get(1)+"<br />";
+            }
+            s+="</body></html>";
+            return s;
+        } catch (Exception ex) {
+            Logger.getLogger(App1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "error";
     }
 
 }
